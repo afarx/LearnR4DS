@@ -48,6 +48,14 @@ ggplot(data = diamonds) +
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")+coord_polar()
 
+library(nycflights13)
+library(tidyverse)
+flights
+?is.na()
 
-
+select(flights, time_hour, air_time, everything())
+select(flights, contains("TIME"))
+View()
+View(flights)
+(x <- 1:10)
 
