@@ -1,61 +1,36 @@
 library('tidyverse')
+library('nycflights13')
+library('stringr')
+library('forcats')
 
-ggplot(data=mpg)+
-  geom_point(mapping=aes(x=displ,y=hwy,color=class))
-mpg
-ggplot(mtcars, aes(wt, mpg)) +
-  geom_point(shape = 21, colour = "black", fill = "white", size = 5, stroke = 1)
+?stringr::str_trim
+x <- "1888 is the longest year in Roman numerals: MDCCCLXXXVIII"
+str_view(x, "CC?")
 
+df <- tibble(
+  word = words, 
+  i = seq_along(word)
+)
+colours <- c("red", "orange", "yellow", "green", "blue", "purple")
+colour_match <- str_c(colours, collapse = "|")
+colour_match
 
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) + 
-  facet_grid(. ~ cyl)
+has_colour <- str_subset(sentences, colour_match)
+matches <- str_extract(has_colour, colour_match)
+head(matches)
+more <- sentences[str_count(sentences, colour_match) > 1]
+str_view_all(more, colour_match)
 
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(drv ~ .)
+gss_cat %>% count(partyid)
 
-
-ggplot(data = mpg) +
-  geom_smooth(mapping = aes(x = displ, y = hwy))
-
-ggplot(data = mpg) +
-  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
-
-ggplot(data = mpg) +
-  geom_smooth(
-    mapping = aes(x = displ, y = hwy, color = drv)
-  )
-
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
-  geom_point() + 
-  geom_smooth(se = T)
-
-ggplot(data = diamonds) + 
-  geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
-
-ggplot(data = diamonds) + 
-  geom_bar(mapping = aes(x = cut, y = ..prop..))
-
-ggplot(data = diamonds) + 
-  geom_bar(mapping = aes(x = cut, fill = color, y = ..prop..))
-
-ggplot(data = diamonds) + 
-  geom_bar(mapping = aes(x = cut, colour = cut))
-ggplot(data = diamonds) + 
-  geom_bar(mapping = aes(x = cut, fill = cut))
-
-ggplot(data = diamonds) + 
-  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")+coord_polar()
-
-library(nycflights13)
-library(tidyverse)
-flights
-?is.na()
-
-select(flights, time_hour, air_time, everything())
-select(flights, contains("TIME"))
-View()
-View(flights)
-(x <- 1:10)
-
+gss_cat %>%
+  mutate(partyid = fct_recode(partyid,
+                              "Republican, strong"    = "Strong republican",
+                              "Republican, weak"      = "Not str republican",
+                              "Independent, near rep" = "Ind,near rep",
+                              "Independent, near dem" = "Ind,near dem",
+                              "Democrat, weak"        = "Not str democrat",
+                              "Democrat, strong"      = "Strong democrat"
+  )) %>%
+  count(partyid)
+u <- ymd(c("2010-10-10", "bananas"))
